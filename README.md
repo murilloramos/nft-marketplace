@@ -1,13 +1,5 @@
-# Sample Hardhat Project
+# 🛍️ NFT Marketplace
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+A NFT marketplace built from scratch to explore and master full-stack Web3 development.
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
-```
+This project is a complete NFT marketplace implementation designed as a learning journey through the entire Web3 development stack. From smart contracts to frontend integration, every component has been built to understand the complete architecture of decentralized applications.
