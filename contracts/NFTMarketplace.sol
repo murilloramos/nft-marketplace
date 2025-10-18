@@ -118,14 +118,68 @@ contract NFTMarketplace is ERC721URIStorage {
 
     // Function that will create market sale
     function createMarketSale(uint256 tokenId) public payable {
-        uint256 price = idMarketItem[tokenId].price;
+        uint256 price = idMarketItem[tokenId].price; // Here we are getting the price of a particular NFT (based on his Id)
 
-        require(msg.value == price, "Please submit the asking price in order to complete the purchase");
+        require(msg.value == price, "Please submit the asking price in order to complete the purchase"); // If someone wants to buy this NFT they have to provide the exact price of the NFT for making the sale
 
-        idMarketItem[tokenId].owner = payable(msg.sender);
-        idMarketItem[tokenId].sold = true;
-        idMarketItem[tokenId].owner = payable(address(0));
+        idMarketItem[tokenId].owner = payable(msg.sender); // Whoever is calling the function will become the owner once he made the payment
+        idMarketItem[tokenId].sold = true; // NFT gets solded
+        idMarketItem[tokenId].owner = payable(address(0)); // This NFT  will not belong to the contract anymore
 
-        _itemsSold--;
+        _itemsSold++;
+
+        _transfer(address(this), msg.sender, tokenId);
+
+        payable(owner).transfer(listingPrice); // Here it will get the comission whenever every sales happen that will be avaiable in the owner address (the owner of the Marketplace, the address that will run the Smart Contract into the blockchain)
+        payable(idMarketItem[tokenId].seller).transfer(msg.value); // Here the rest amount will be transfered to the NFT owner
     }
+
+    // Getting unsold NFT data (this will return a list of all the NFTs that are currently available for purchase)
+    function fetchMarketItem() public view returns (MarketItem[] memory) {
+        uint256 itemCount = _tokenIds; // How many NFTs exists inside the NFT Marketplace
+        uint256 unsoldItemCount = _tokenIds - _itemsSold; // How many NFTs are currently avaiable for sale
+        uint256 currentIndex = 0; // We will use this variable to keep track of the position in our new "items" array as we add unsold NFTs to it
+
+        // Inside this array will be stored unsold NFTs
+        MarketItem[] memory items = new MarketItem[](unsoldItemCount); // We want to fetch only those NFTs which are NOT sold, so it can be possible to display on the frontend application (This line creates that empty "display counter". We are preparing an array (a list) that is just the right size to hold all our unsold items)
+
+        // So we are creating a new array in memory called "items". Its size is exactly "unsoldItemCount" (which was 7 in our example),  we now have an empty list with 7 slots ready to be filled.
+        for (uint256 i = 0; i < itemCount; i++) { // This will go through every single NFT we've ever created, one by one, starting from the first one (index 0) up to the last one
+            if(idMarketItem[i + 1].owner == address(this)) { // This is the most important check! For each NFT we look at, we ask: "Is this NFT currently owned by the marketplace contract itself?"
+
+            // In our marketplace logic, when an NFT is for sale, its owner is set to address(this) (the contract's own address). When it's sold, the owner is changed to the buyer's address. So, if the owner is the contract, it means the NFT is UNSOLD and available for purchase
+
+                uint256 currentId = i + 1; // This just calculates the actual NFT ID from the loop index. If i is 0, then currentId is 1 (the first NFT)
+
+                MarketItem storage currentItem = idMarketItem[currentId]; // This will return the complete information about the unsold NFT that we just sorted out
+                items[currentIndex] = currentItem; // This is where we put the unsold NFT onto our "display counter" (the items array)
+                currentIndex += 1;
+            }
+        }
+        return items; // We've looked at every single NFT. Now our items array is filled with all the unsold ones. This line sends that finished list back to whoever called the function (like your website's frontend)
+    }
+
+    // Purchase item function
+    function fetchMyNFT() public view returns (MarketItem[] memory) {
+        uint256 totalCount = _tokenIds;
+        uint256 itemCount = 0;
+        uint256 currentIndex = 0;
+
+        for (uint256 i = 0; i < totalCount; i++) {
+            if(idMarketItem[i + 1].owner == msg.sender) {
+                itemCount += 1;
+            }
+        }
+        
+        MarketItem[] memory items = new MarketItem[] (itemCount);
+        for (uint256 i = 0; i < totalCount; i++) {
+
+            if (idMarketItem[i + 1].owner == msg.sender) {
+                uint256 currentId = i + 1;
+                MarketItem storage currentItem = idMarketItem[currentId];
+                items[currentIndex] = currentItem;
+                currentIndex += 1;
+            }
+       }
+       return items;    }
 }
