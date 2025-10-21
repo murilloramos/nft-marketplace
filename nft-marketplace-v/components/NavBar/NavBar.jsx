@@ -23,12 +23,64 @@ const NavBar = () => {
   // discover is true -> Show Discover Menu
   // discover is false -> Hide Discover Menu
   // We will use setDiscover(true) to show, setDiscover(false) to hide
-
   const [help, setHelp] = useState(false)
   const [notification, setNotification] = useState(false)
   const [profile, setProfile] = useState(false)
   const [openSideMenu, setOpenSideMenu] = useState(false)
-  return <div>NavBar</div>
+
+  const openMenu = (e) => {
+    const btnText = e.target.innerText
+    if (btnText == "Discover") {
+      setDiscover(true)
+      setHelp(false)
+      setNotification(false)
+      setProfile(false)
+
+      // Whenever we click the Discover button, we have to put the rest of the navbar items to false because we only want to open one component not multiple components
+
+    } else if (btnText == "Help Center") {
+      setDiscover(false)
+      setHelp(true)
+      setNotification(false)
+      setProfile(false)
+    } else {
+      setDiscover(false)
+      setHelp(false)
+      setNotification(false)
+      setProfile(false)
+    }
+  }
+
+  return (
+    <div className={Style.navBar}>
+      <div className={Style.navbar_container}>
+        <div className={Style.navbar_container_left}>  {/* The navigation will be divided in two parts: one is the lft section and the other one is the right section (this rule will be followed by all the components/jsx file) */}
+          <div className={Style.logo}>
+            <Image src={images.logo} alt='NFT MarketPlace' width={100} height={100}/>
+          </div>
+          <div className={Style.navbar_container_left_box_input}>
+            <div className={Style.navbar_container_left_box_input_box}>
+              <input type='text' placeholder='Search NFT'/>
+              <BsSearch onClick={() => {}} className={Style.search_icon}/>
+            </div>
+          </div>
+        </div>
+
+        {/* End of the Left Section*/}
+        <div className={Style.navbar_container_right}></div>
+          <div className={Style.navbar_container_right_discover}>
+
+            {/* Discover Menu */}
+            <p onClick={(e) => openMenu(e)}>Discover</p> {/* Whenever somebody click the Discover component will open */}
+            {discover && ( /* Since the discover state is initially false the component will not display, but if it turns it to true then it the entire component will display */
+              <div className={Style.navbar_container_right_discover_box}>
+                <Discover /> {/* Discover component */}
+              </div>
+            )}
+          </div> 
+      </div>
+    </div> 
+  )
 }
 
 export default NavBar
