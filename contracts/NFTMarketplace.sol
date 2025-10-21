@@ -161,24 +161,27 @@ contract NFTMarketplace is ERC721URIStorage {
 
     // Purchase item function
     function fetchMyNFT() public view returns (MarketItem[] memory) {
-        uint256 totalCount = _tokenIds;
-        uint256 itemCount = 0;
-        uint256 currentIndex = 0;
+        uint256 totalCount = _tokenIds; // Get total numbers of NFTs created
+        uint256 itemCount = 0; // The counter for the NFTs owner by the caller of the funcion (msg.sender)
+        uint256 currentIndex = 0; // Index for positioning
 
+        // Here this loop will count how many NFTs the caller of the function owns
         for (uint256 i = 0; i < totalCount; i++) {
             if(idMarketItem[i + 1].owner == msg.sender) {
                 itemCount += 1;
             }
         }
-        
-        MarketItem[] memory items = new MarketItem[] (itemCount);
-        for (uint256 i = 0; i < totalCount; i++) {
 
+        // Here this array will have the exact size that is needed, which means only the caller's NFTs
+        MarketItem[] memory items = new MarketItem[] (itemCount);
+        
+        // Filling the array with the caller's NFTs
+        for (uint256 i = 0; i < totalCount; i++) {
             if (idMarketItem[i + 1].owner == msg.sender) {
                 uint256 currentId = i + 1;
                 MarketItem storage currentItem = idMarketItem[currentId];
-                items[currentIndex] = currentItem;
-                currentIndex += 1;
+                items[currentIndex] = currentItem; // Adding NFT to the array
+                currentIndex += 1; // Moving to the next position
             }
        }
        return items;  
