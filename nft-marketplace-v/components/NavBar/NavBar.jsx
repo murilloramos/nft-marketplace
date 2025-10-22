@@ -77,7 +77,19 @@ const NavBar = () => {
                 <Discover /> {/* Discover component */}
               </div>
             )}
-          </div> 
+          </div>
+
+          {/* Help Center Menu */}
+          <div className={Style.navbar_container_right_help}>
+            <p onClick={(e) => openMenu(e)}>Help Center</p>
+            {help && (
+              <div className={Style.navbar_container_right_help_box}>
+                <HelpCenter /> {/* HelpCenter component */}
+              </div>
+            )}
+          </div>
+
+          
       </div>
     </div> 
   )
