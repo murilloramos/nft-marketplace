@@ -51,6 +51,17 @@ const NavBar = () => {
     }
   }
 
+  const openNotification = () => {
+    if (!notification) {
+      setNotification(true)
+      setDiscover(false)
+      setHelp(false)
+      setProfile(false)
+    } else {
+     setNotification(false)
+    }
+  }
+
   return (
     <div className={Style.navBar}>
       <div className={Style.navbar_container}>
@@ -67,7 +78,7 @@ const NavBar = () => {
         </div>
 
         {/* End of the Left Section*/}
-        <div className={Style.navbar_container_right}></div>
+        <div className={Style.navbar_container_right}>
           <div className={Style.navbar_container_right_discover}>
 
             {/* Discover Menu */}
@@ -89,7 +100,12 @@ const NavBar = () => {
             )}
           </div>
 
-          
+          {/* Notification */}
+          <div className={Style.navbar_container_right_notify}>
+            <MdNotifications className={Style.notify} onClick={() => openNotification} />
+              {notification && <Notification />}
+          </div>
+        </div>
       </div>
     </div> 
   )
