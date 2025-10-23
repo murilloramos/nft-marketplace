@@ -134,6 +134,16 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+
+      {/* Sidebar Component, it will be displayed only on the mobile device */}
+      {
+        openSideMenu && (
+          <div className={Style.SideBar}>
+            <SideBar  setOpenSideMenu={setOpenSideMenu} />
+          </div>
+        )
+      }
+
     </div> 
   )
 }
