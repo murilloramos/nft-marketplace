@@ -125,6 +125,13 @@ const NavBar = () => {
               {profile && <Profile />}
             </div>
           </div>
+
+          {/* Menu Button */}
+          <div className={Style.navbar_container_right_menuBtn}>
+            <CgMenuRight className={Style.menuIcon}
+              onClick={() => openSideBar()}
+            />
+          </div>
         </div>
       </div>
     </div> 
