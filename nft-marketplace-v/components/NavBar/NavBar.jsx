@@ -105,6 +105,11 @@ const NavBar = () => {
             <MdNotifications className={Style.notify} onClick={() => openNotification} />
               {notification && <Notification />}
           </div>
+
+          {/* Creating Button Section */}
+          <div className={Style.navbar_container_right_button}>
+            <Button btnText = "Create"/>
+          </div>
         </div>
       </div>
     </div> 
