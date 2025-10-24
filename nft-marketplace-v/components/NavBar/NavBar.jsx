@@ -62,6 +62,25 @@ const NavBar = () => {
     }
   }
 
+  const openProfile = () => {
+    if (!profile) {
+      setProfile(true)
+      setDiscover(false)
+      setHelp(false)
+      setNotification(false)
+    } else {
+      setProfile(false)
+    }
+  }
+
+  const openSideBar = () => {
+    if (!openSideMenu) {
+      setOpenSideMenu(true)
+    } else {
+      setOpenSideMenu(false)
+    }
+  }
+
   return (
     <div className={Style.navBar}>
       <div className={Style.navbar_container}>
@@ -143,7 +162,6 @@ const NavBar = () => {
           </div>
         )
       }
-
     </div> 
   )
 }
