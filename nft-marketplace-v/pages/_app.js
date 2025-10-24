@@ -3,6 +3,15 @@
 
 import "@/styles/globals.css";
 
-const MyApp = ({ Component, pageProps }) => <Component {...pageProps} />
+// Internal global import of NavBar and Footer, they will be in every single page in the entire application
+
+import { NavBar } from "@/components/componentsindex";
+
+const MyApp = ({ Component, pageProps }) => (
+    <div>
+        <NavBar />
+        <Component {...pageProps} />
+    </div>
+)
 
 export default MyApp
