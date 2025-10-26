@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { FaUserAlt, FaRegImage, FaUserEdit } from 'react-icons/fa'
 import { MdHelpCenter } from 'react-icons/md'
-import { TbDownloadOff, TbDownload } from 'react-icons'
+import { TbDownloadOff, TbDownload } from 'react-icons/tb'
 import Link from 'next/link'
 
 // Internal Imports
